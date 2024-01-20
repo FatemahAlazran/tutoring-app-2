@@ -1,0 +1,10 @@
+{
+    "login": "Login",
+    "register": "Regsiter",
+    "email": "Email",
+    "userName": "User name",
+    "password": "Password",
+    "googleSign": "Google Sign",
+    "chats": "Chats",
+    "profile": "Profile"
+}
