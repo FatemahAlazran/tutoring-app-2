@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tutoring_app_2/app/config/router/my_named_route.dart';
+import 'package:tutoring_app_2/app/modules/chats/domain/models/user.dart';
 import 'package:tutoring_app_2/app/modules/chats/view/home.dart';
 import 'package:tutoring_app_2/app/modules/auth/views/login.dart';
 import 'package:tutoring_app_2/app/modules/auth/views/register.dart';
 import 'package:tutoring_app_2/app/modules/auth/views/splashscreen.dart';
 import 'package:tutoring_app_2/app/modules/navbar/view/navbar_scaffold.dart';
 import 'package:tutoring_app_2/app/modules/navbar/widget/navbar_widget.dart';
+import 'package:tutoring_app_2/app/modules/one_to_one_chat/views/message_screen.dart';
 import 'package:tutoring_app_2/app/modules/profile/profile_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -66,9 +68,18 @@ abstract class AppRouter {
               name: MyNamedRoutes.chats,
               pageBuilder: (context, state) => NoTransitionPage(
                     key: state.pageKey,
-                    child: HomePage(),
+                    child: const HomePage(),
                   ),
-              routes: []),
+              routes: [
+                GoRoute(
+                  path: "${MyNamedRoutes.chatDetails}",
+                  name: MyNamedRoutes.chatDetails,
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: OneToOneMessagingScreen(user: state.extra as User),
+                  ),
+                ),
+              ]),
 
           /// profile route
           GoRoute(
@@ -76,7 +87,7 @@ abstract class AppRouter {
             name: MyNamedRoutes.profile,
             pageBuilder: (context, state) => NoTransitionPage(
               key: state.pageKey,
-              child: ProfileScreen(),
+              child: const ProfileScreen(),
             ),
           ),
         ],

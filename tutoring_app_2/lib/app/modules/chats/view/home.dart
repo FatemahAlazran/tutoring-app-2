@@ -24,6 +24,10 @@ class HomePage extends ConsumerWidget {
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
+                onTap: () {
+                  GoRouter.of(context)
+                      .pushNamed(MyNamedRoutes.chatDetails, extra: data[index]);
+                },
                 title: Text(data[index].username.toString()),
                 subtitle: Text(data[index].email),
                 tileColor: MyColors.greyscale_100,
