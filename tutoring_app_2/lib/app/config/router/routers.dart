@@ -88,7 +88,7 @@ abstract class AppRouter {
             name: MyNamedRoutes.profile,
             pageBuilder: (context, state) => NoTransitionPage(
               key: state.pageKey,
-              child: const ProfileScreen(),
+              child: ProfileScreen(),
             ),
           ),
         ],
