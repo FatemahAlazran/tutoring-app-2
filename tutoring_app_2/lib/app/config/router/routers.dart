@@ -40,7 +40,7 @@ abstract class AppRouter {
         name: MyNamedRoutes.login,
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: const LoginPage(),
+          child: LoginPage(),
         ),
       ),
       GoRoute(
@@ -76,7 +76,8 @@ abstract class AppRouter {
                   name: MyNamedRoutes.chatDetails,
                   pageBuilder: (context, state) => NoTransitionPage(
                     key: state.pageKey,
-                    child: OneToOneMessagingScreen(user: state.extra as User),
+                    child: OneToOneMessagingScreen(
+                        theuser: state.extra as UserModel),
                   ),
                 ),
               ]),

@@ -2,18 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tutoring_app_2/app/core/extensions/build_context_ext.dart';
+import 'package:tutoring_app_2/app/modules/chats/domain/models/user.dart';
 import 'package:tutoring_app_2/app/modules/one_to_one_chat/domain/models/message.dart';
 import 'package:tutoring_app_2/app/modules/one_to_one_chat/domain/providers/message_provider.dart';
 import 'package:tutoring_app_2/app/modules/one_to_one_chat/domain/repo/message_repo.dart';
 import 'package:tutoring_app_2/app/modules/one_to_one_chat/widget/message_bubble.dart';
 
 class MessagingBodyView extends ConsumerStatefulWidget {
-  final selectedUser;
+  final UserModel user;
 
-  const MessagingBodyView({
-    super.key,
-    required this.selectedUser,
-  });
+  const MessagingBodyView({super.key, required this.user});
 
   @override
   ConsumerState<MessagingBodyView> createState() => _MessagingBodyViewState();
@@ -22,15 +20,21 @@ class MessagingBodyView extends ConsumerStatefulWidget {
 class _MessagingBodyViewState extends ConsumerState<MessagingBodyView> {
   final _sendMessageController = TextEditingController();
   @override
+  void dispose() {
+    _sendMessageController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
-    final messagingRepo = ref.read(messagingProvider);
+    final messagingRepo = ref.watch(messagingProvider);
+    final currentUserId = FirebaseAuth.instance.currentUser!.uid;
     return Column(
       children: [
         Expanded(
           child: StreamBuilder<List<Message>>(
             stream: messagingRepo.messagesStream(
-              senderId: FirebaseAuth.instance.currentUser!.uid,
-              receiverId: widget.selectedUser.userId,
+              senderId: currentUserId,
+              receiverId: widget.user.id,
             ),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
@@ -51,7 +55,7 @@ class _MessagingBodyViewState extends ConsumerState<MessagingBodyView> {
             },
           ),
         ),
-        _buildMessageInput(context, widget.selectedUser.userId, messagingRepo),
+        _buildMessageInput(context, widget.user.id, messagingRepo),
       ],
     );
   }
