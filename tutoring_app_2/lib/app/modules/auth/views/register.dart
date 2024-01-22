@@ -80,6 +80,11 @@ class RegisterPage extends ConsumerWidget {
                       fontWeight: FontWeight.bold, color: MyColors.primary_500),
                 ),
               ),
+              TextButton(
+                  onPressed: () {
+                    context.goNamed(MyNamedRoutes.login);
+                  },
+                  child: Text("Have account? click to signin")),
               Visibility(
                   visible: authState.isLoading == true,
                   child: Center(child: CircularProgressIndicator()))

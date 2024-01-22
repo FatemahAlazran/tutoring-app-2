@@ -11,6 +11,19 @@ class AuthRepo {
 
   Stream<User?> get authStateChanged => _firebaseAuth.authStateChanges();
 
+  Future<User?> loginUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+      return userCredential.user;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   Future<User?> createUserWithEmailAndPassword(
       {required String email,
       required String password,

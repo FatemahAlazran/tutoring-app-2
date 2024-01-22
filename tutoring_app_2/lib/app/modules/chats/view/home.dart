@@ -18,7 +18,7 @@ class HomePage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(context.translate.chats),
       ),
-      body: chatUsers.when(data: (List<User> data) {
+      body: chatUsers.when(data: (List<UserModel> data) {
         return ListView.builder(
           itemCount: data.length,
           itemBuilder: (context, index) {

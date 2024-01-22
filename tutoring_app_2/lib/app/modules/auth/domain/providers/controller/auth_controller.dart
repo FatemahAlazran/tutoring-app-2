@@ -8,6 +8,29 @@ class AuthController extends StateNotifier<AuthState> {
 
   final AuthRepo _authRepo;
 
+  Future<bool> login({required String email, required String password}) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      User? user = await _authRepo.loginUserWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      state =
+          state.copyWith(isLoading: false, isAuth: false, error: e.toString());
+      return false;
+    }
+    return false;
+  }
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future<User> handleSignInEmail(String email, String password) async {
+    UserCredential result =
+        await auth.signInWithEmailAndPassword(email: email, password: password);
+    final User user = result.user!;
+
+    return user;
+  }
+
   Future<bool> register(
       {required String email,
       required String username,

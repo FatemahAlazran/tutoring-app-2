@@ -5,13 +5,13 @@ import 'package:tutoring_app_2/app/modules/chats/domain/models/user.dart';
 class ChatsRepo {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  Future<List<User>> fetchUsers() async {
+  Future<List<UserModel>> fetchUsers() async {
     try {
       QuerySnapshot querySnapshot =
           await _firebaseFirestore.collection('users').get();
 
-      List<User> usersList = querySnapshot.docs
-          .map((doc) => User.fromMap(doc.data() as Map<String, dynamic>))
+      List<UserModel> usersList = querySnapshot.docs
+          .map((doc) => UserModel.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
       return usersList;
     } catch (e) {

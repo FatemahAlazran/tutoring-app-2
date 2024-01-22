@@ -5,7 +5,7 @@ import 'package:tutoring_app_2/app/modules/chats/domain/repo/chat_repo.dart';
 
 final chatsRepositoryProvider = Provider((ref) => ChatsRepo());
 
-final usersProvider = FutureProvider.autoDispose<List<User>>((ref) async {
+final usersProvider = FutureProvider.autoDispose<List<UserModel>>((ref) async {
   final chatsRepo = ref.watch(chatsRepositoryProvider);
   debugPrint("*******");
   try {
